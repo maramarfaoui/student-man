@@ -25,6 +25,12 @@ spec:
             limits:
               memory: "2Gi"
               cpu: "1"
+          volumeMounts:
+            - mountPath: /opt/sonarqube/data
+              name: sonarqube-data
+      volumes:
+        - name: sonarqube-data
+          emptyDir: {}   # ⚠️ change plus tard par un PersistentVolumeClaim
 ---
 apiVersion: v1
 kind: Service
@@ -38,4 +44,5 @@ spec:
     - protocol: TCP
       port: 9000
       targetPort: 9000
+      nodePort: 32000   # 👈 Port fixe
   type: NodePort
