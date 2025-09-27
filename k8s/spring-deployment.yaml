@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       labels:
-        app: spring-app
+        app: studentmang-app
     spec:
       containers:
         - name: studentmang-app
