@@ -25,12 +25,18 @@ spec:
             limits:
               memory: "4Gi"
               cpu: "2"
+          readinessProbe:
+            httpGet:
+              path: /about
+              port: 9000
+            initialDelaySeconds: 60   # temps d’attente avant le check
+            periodSeconds: 15         # fréquence de vérification
           volumeMounts:
-            - mountPath: /opt/sonarqube/data
-              name: sonarqube-data
+            - name: sonarqube-data
+              mountPath: /opt/sonarqube/data
       volumes:
         - name: sonarqube-data
-          emptyDir: {}   # ⚠️ change plus tard par un PersistentVolumeClaim
+          emptyDir: {}   # ⚠️ à remplacer par un PVC si tu veux de la persistance
 ---
 apiVersion: v1
 kind: Service
@@ -44,5 +50,5 @@ spec:
     - protocol: TCP
       port: 9000
       targetPort: 9000
-      nodePort: 32000   # 👈 Port fixe
+      nodePort: 32000
   type: NodePort
