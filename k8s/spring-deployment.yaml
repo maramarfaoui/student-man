@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+aapiVersion: apps/v1
 kind: Deployment
 metadata:
   name: studentmang-app
@@ -15,9 +15,9 @@ spec:
     spec:
       containers:
         - name: studentmang-app
-          image: maramsd/studentmang-app:latest   # Ton image dockerhub
+          image: maramsd/studentmang-app:latest
           ports:
-            - containerPort: 8089
+            - containerPort: 8080   
           env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql-service:3306/testdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
@@ -28,6 +28,8 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: mysql-root-password
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+              value: com.mysql.cj.jdbc.Driver
 ---
 apiVersion: v1
 kind: Service
@@ -36,9 +38,11 @@ metadata:
   namespace: devops
 spec:
   selector:
-    app: spring-app
+    app: studentmang-app
   ports:
     - protocol: TCP
-      port: 8089
-      targetPort: 8089
+      port: 8080          
+      targetPort: 8080    
+      nodePort: 32639     
   type: NodePort
+
