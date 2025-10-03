@@ -17,7 +17,7 @@ spec:
         - name: studentmang-app
           image: maramsd/studentmang-app:latest
           ports:
-            - containerPort: 8089
+            - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql-service:3306/testdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
@@ -41,7 +41,7 @@ spec:
     app: studentmang-app
   ports:
     - protocol: TCP
-      port: 8089
-      targetPort: 8089
+      port: 8080
+      targetPort: 8080
       nodePort: 32639
   type: NodePort
