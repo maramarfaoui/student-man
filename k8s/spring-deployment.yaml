@@ -1,4 +1,4 @@
-aapiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: studentmang-app
@@ -17,7 +17,7 @@ spec:
         - name: studentmang-app
           image: maramsd/studentmang-app:latest
           ports:
-            - containerPort: 8080   
+            - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql-service:3306/testdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
@@ -41,8 +41,7 @@ spec:
     app: studentmang-app
   ports:
     - protocol: TCP
-      port: 8080          
-      targetPort: 8080    
-      nodePort: 32639     
+      port: 8080
+      targetPort: 8080
+      nodePort: 32639
   type: NodePort
-
